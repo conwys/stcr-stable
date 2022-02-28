@@ -32,22 +32,22 @@ def renderindex():
 
 def login():
     if(request.method == 'POST'):
-        username = request.form.get('email')
+        email = request.form.get('email')
         password = request.form.get('password')     
-        if username == info['email'] and password == info['password']:
+        if email == info['email'] and password == info['password']:
             
-            session['info'] = username
+            session['info'] = email
             return redirect('/dashboard')
 
-        return "<h1>Wrong username or password</h1>"    
+        return render_template('errorpage.html')   
 
     return render_template("login.html")
 
 @app.route('/dashboard')
 def dashboard():
-    if('user' in session and session['email'] == info['email']):
+    if('info' in session and session['email'] == info['email']):
         return '<h1>Welcome to the dashboard</h1>'
-    
+        return render_template('/dashboard')
 
     return '<h1>You are not logged in.</h1>'  
 
